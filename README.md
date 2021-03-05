@@ -1,26 +1,26 @@
 # Mastereg
 
-# Mastereg is master list that keep track of students with RTIs(Respiratory Tract Infections). It is a web based system which that helps schools assist asmatic students with breathing and also help manage TB cases among students.
+#Mastereg is master list that keep track of students with RTIs(Respiratory Tract Infections). It is a web based system which that helps schools assist asmatic students with breathing and also help manage TB cases among students.
 
-# The system is developed using python-flask. To install the project you need:
+#The system is developed using python-flask. To install the project you need:
 
-    # 1. clone the repository using 
+    1. clone the repository using 
 
-        # git clone https://www.github.com/oumao/mastereg.git
+        git clone https://www.github.com/oumao/mastereg.git
 
-    # 2. Ensure python 3.5 and above is installed in your machine
+    2. Ensure python 3.5 and above is installed in your machine
 
-    # 3. Create a virtual environment in the folder you have cloned the project using:
+    3. Create a virtual environment in the folder you have cloned the project using:
 
-        # virtualenv yourvirtualenv
+        virtualenv yourvirtualenv
 
-    # 4. Activate the virtualenv and install the dependecies using:
+    4. Activate the virtualenv and install the dependecies using:
 
-        # pip install -r requirements.txt
+        pip install -r requirements.txt
     
-    # 5. Finally run the project:
+    5. Finally run the project:
 
-        # python run.py
+        python run.py
 
         
 
