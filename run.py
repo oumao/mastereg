@@ -1,7 +1,7 @@
-from flask import Flask
+import os
+from repomas import create_app
 
-app = Flask(__name__)
+app = create_app(os.getenv('FLASK_ENV'))
 
-@app.route('/')
-def home():
-    return render_template('home.html', title="Home")
+if __name__ == '__main__':
+    app.run()
