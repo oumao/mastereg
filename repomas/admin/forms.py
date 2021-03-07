@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField, BooleanField, FloatField, PasswordField
-from wtforms.validators import DataRequired, EqualTo, Email, Length
+from wtforms import StringField, SubmitField, PasswordField
+from wtforms.validators import DataRequired, EqualTo, Email, Length, ValidationError
+
+from repomas.models import Admin
 
 
 
@@ -16,11 +18,21 @@ class AdminRegistrationForm(FlaskForm):
 
     submit = SubmitField('Register')
 
+    def validate_email(self, email):
+        admin = Admin.query.filter_by(email=email.data).first()
+        if admin:
+            raise ValidationError('That Email is taken. Please choose a different one.')
+
+    def validate_username(self, username):
+        admin = Admin.query.filter_by(username=username.data).first()
+        if admin:
+            raise ValidationError('That username is taken. Please choose a different one.')
+
 
 class AdminLoginForm(FlaskForm):
     
-    username = StringField('First Name', validators=[DataRequired()])
-    password = PasswordField('First Name', validators=[DataRequired(), Length(min=6, max=20)])
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=20)])
 
     submit = SubmitField('Login')
 
