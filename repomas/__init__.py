@@ -44,5 +44,8 @@ def create_app(config):
     from .medical import med as medical_blueprint
     app.register_blueprint(medical_blueprint)
 
+    from .infoprod import info as info_blueprint
+    app.register_blueprint(info_blueprint)
+
 
     return app
