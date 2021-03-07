@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <a href="{{ url_for('admin.dashboard')}}" class="card bg-primary text-center text-white" 
+                    style="max-width: 13rem; height: 2rem; text-decoration: none;">Home</a>  
+                </div>
+                <div class="col-6">
+                    <a href="{{ url_for('student.add_student')}}" class="card bg-primary text-center text-white" 
+                    style="max-width: 13rem; height: 2rem; text-decoration: none; ">Add another student</a>
+                </div>
+            </div>  
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h3 class="title text-center">Registered Students</h3>
+                        <hr>
+                    </div>
+                    <div class="content table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Name</th>
+                                <th>Admission Number</th>
+                                <th>Date of Birth</th>
+                                <th>Zipcode</th>
+                                <th>County</th>
+                                <th>Ward</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                    {% for stud in students %}
+                                        
+                                            <tr class="table-row">
+                                                <td>
+                                                    <a href="{{ url_for('student.student_detail', student_id=stud.id)}}" style="text-decoration: none;">
+                                                        {{ stud.first_name + " " + stud.last_name}}
+                                                    </a>
+                                                </td>
+                                                <td>{{ stud.admission }}</td>
+                                                <td>{{ stud.birthdate.strftime("%Y/%m/%d")}}</td>
+                                                <td>{{ stud.zipcode}}</td>
+                                                <td>{{ stud.county}}</td>
+                                                <td>{{ stud.ward}}</td>
+                                                <td>
+                                                    <a href="{{ url_for('student.update_student', student_id=stud.id)}}" class="btn btn-primary">Edit</a>
+                                                    |
+                                                    <a href="{{ url_for('student.delete_student', student_id=stud.id)}}" class="btn btn-danger">Delete</a>
+                                                </td>
+                                            </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                        <p>Total students are {{ students.count(id)}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

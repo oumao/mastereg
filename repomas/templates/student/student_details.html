@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <a href="{{ url_for('student.all_students')}}" class="card bg-primary text-center text-white" 
+            style="max-width: 13rem; height: 2rem; text-decoration: none;">Students List</a>  
+        </div>
+        <div class="col-6">
+            <a href="{{ url_for('med.add_record')}}" class="card bg-primary text-center text-white" 
+            style="max-width: 13rem; height: 2rem; text-decoration: none; ">Add {{ student.first_name }}'s medical record</a>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <h2 class="text-center">Medical Records</h2><hr>
+        <div class="card-body">
+            <h3 class="card-title">Name: {{ student.first_name + " " + student.last_name }}</h3>
+            <div class="row">
+                <p class="col-3">Admission: {{ student.admission }}</p>
+                <p class="col-3">Age: {{ (year-student.birthdate).days//365 }} years</p>
+                <p class="col-3">Zipcode: {{ student.zipcode }}</p>
+                <p class="col-3">County: {{ student.county }}</p>
+                <p class="col-3">Ward: {{ student.county }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
