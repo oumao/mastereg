@@ -20,7 +20,7 @@ class AdminRegistrationForm(FlaskForm):
 class AdminLoginForm(FlaskForm):
     
     username = StringField('First Name', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=20)])
+    password = PasswordField('First Name', validators=[DataRequired(), Length(min=6, max=20)])
 
     submit = SubmitField('Login')
 
