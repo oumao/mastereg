@@ -7,7 +7,7 @@
             style="max-width: 13rem; height: 2rem; text-decoration: none;">Students List</a>  
         </div>
         <div class="col-6">
-            <a href="{{ url_for('med.add_record')}}" class="card bg-primary text-center text-white" 
+            <a href="{{ url_for('med.add_record', student_id=student.id)}}" class="card bg-primary text-center text-white" 
             style="max-width: 13rem; height: 2rem; text-decoration: none; ">Add {{ student.first_name }}'s medical record</a>
         </div>
     </div>

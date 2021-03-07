@@ -6,14 +6,17 @@ from . import info
 
 @info.route('/info/facilities', methods=['GET'])
 def facilities():
-    req = requests.get("https://play.dhis2.org/demo/api/33/dataSets/EDzMBk0RRji",
+
+    facilits = []
+
+    req = requests.get("https://play.dhis2.org/demo/api/categoryOptions.json?fields=id,organisationUnits~pluck[name]",
         auth=HTTPBasicAuth('admin', 'district'))
 
-    
     if req.status_code == 200:
-        pass
-    print(req.status_code)
-    return render_template('info/facilities.html', title="Facilities")
+        facilits.append(req.json())
+
+        
+    return render_template('info/facilities.html', title="Facilities", facilits=facilits)
 
 
 

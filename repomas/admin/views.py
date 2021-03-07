@@ -13,7 +13,7 @@ def registration():
 
     admin = Admin.query.filter_by(id=1).first()
 
-    if admin:
+    if not admin:
         return redirect(url_for('admin.login'))
     else:
 
