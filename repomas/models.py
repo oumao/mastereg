@@ -11,12 +11,12 @@ class Admin(db.Model, UserMixin):
 
     __tablename__ = "administrator"
 
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(15), nullable=False)
-    last_name = db.Column(db.String(15), nullable=False)
-    email = db.Column(db.String(20), nullable=False, unique=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
     username = db.Column(db.String(15), nullable=False, unique=True)
-    password = db.Column(db.String(80), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
 
     def __repr__(self) -> str:
         return "<Admin: {0} {1} {2} {3}>".format(self.first_name, self.last_name, 
@@ -28,10 +28,10 @@ class Student(db.Model):
 
     __tablename__ = "students"
 
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(15), nullable=False)
-    last_name = db.Column(db.String(15), nullable=False)
-    admission = db.Column(db.String(15), nullable=False, unique=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    admission = db.Column(db.String(20), nullable=False, unique=True)
     birthdate = db.Column(db.DateTime, nullable=False)
     zipcode = db.Column(db.String(10), nullable=False)
     county = db.Column(db.String(15), nullable=False)
@@ -47,11 +47,11 @@ class Student(db.Model):
 
 class MedicalStatus(db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     height = db.Column(db.Float, nullable=False)
     weight = db.Column(db.Float, nullable=False)
     disabled = db.Column(db.Boolean, nullable=False, default=False)
-    diagnosis = db.Column(db.String(50), nullable=False)
+    diagnosis = db.Column(db.String(100), nullable=False)
     underlying = db.Column(db.String(50), nullable=False)
     drug = db.Column(db.String(50), nullable=False)
     outcome = db.Column(db.String(50), nullable=False)
@@ -59,7 +59,7 @@ class MedicalStatus(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
 
     def __repr__(self) -> str:
-        return "<Medical Status: {} {} {} {} {} {} {} {}>".format(
+        return "<Medical Status: {0} {1} {2} {3} {4} {5} {6} {7}>".format(
             self.height, self.weight, self.disabled,
             self.diagnosis, self.underlying, self.drug, 
             self.outcome, self.need_referral
