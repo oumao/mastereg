@@ -29,4 +29,5 @@ def create_app(config):
     app.register_blueprint(student_blueprint)
 
 
+
     return app
