@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <a href="{{ url_for('admin.dashboard')}}" class="card bg-primary text-center text-white" 
+                    style="max-width: 13rem; height: 2rem; text-decoration: none;">Home</a>  
+                </div>
+                <div class="col-6">
+                    <a href="{{ url_for('student.add_student')}}" class="card bg-primary text-center text-white" 
+                    style="max-width: 13rem; height: 2rem; text-decoration: none; ">Add another student</a>
+                </div>
+            </div>  
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h3 class="title text-center">Registered Students</h3>
+                        <hr>
+                    </div>
+                    <div class="content table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Facility Name</th>
+                            </thead>
+                            <tbody>
+                                    
+                                            {% for facility in facilits %}
+                                            <tr class="table-row">
+                                                
+                                                <td>{{ facility['categoryOptions']['i4Nbp8S2G6A']}}</td>
+                                        
+                                            </tr>
+                                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
