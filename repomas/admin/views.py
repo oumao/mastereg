@@ -1,10 +1,10 @@
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import AdminRegistrationForm, AdminLoginForm
 
 from repomas import db
-from ..models import Admin
+from repomas.models import Admin
 from . import admin
     
 
@@ -14,7 +14,7 @@ def registration():
     admin = Admin.query.filter_by(id=1).first()
 
     if admin:
-        return redirect(url_for('home.login'))
+        return redirect(url_for('admin.login'))
     else:
 
         form = AdminRegistrationForm()
@@ -29,7 +29,7 @@ def registration():
             db.session.commit()
             
             flash("Administrator Successfully Added", "success")
-            return redirect(url_for('home.login'))
+            return redirect(url_for('admin.login'))
             
         return render_template('admin/registration.html', form=form)
 
@@ -46,10 +46,10 @@ def login():
         if admin and check_password_hash(admin.password, form.password.data):
             login_user(admin)
             flash("Login Succes", "success")
-            return redirect(url_for('home.dashboard'))
+            return redirect(url_for('admin.dashboard'))
         else:
             flash("There is no administrator with such credentials!!. Please check your details and try again", "danger")
-            return redirect(url_for('home.login'))
+            return redirect(url_for('admin.login'))
 
     return render_template('admin/login.html', form=form)
    
@@ -57,5 +57,14 @@ def login():
 
 
 @admin.route('/admin/dashboard', methods=['GET', 'POST'])
+@login_required
 def dashboard():
     return render_template("admin/dashboard.html", title="Admin Dashboard")
+
+
+@admin.route('/admin/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    flash('You have successfully Logged Out','success')
+    return redirect(url_for('admin.login'))
