@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <h1 class="text-center">Welcome to Admin Dashboard</h1>
+        <div class="row text-center mt-5">
+            <div class="col-3">
+                <div class="card">
+                    <a href="{{ url_for('student.add_student')}}" class="btn btn-success">Add Student</a>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <a href="{{ url_for('student.all_students')}}" class="btn btn-success">Show Students</a>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <a href="" class="btn btn-success">Profile</a>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <a href="{{ url_for('admin.logout')}}" class="btn btn-outline-info">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
