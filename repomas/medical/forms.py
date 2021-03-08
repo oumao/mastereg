@@ -8,12 +8,12 @@ class MedicalStatusForm(FlaskForm):
 
     height = FloatField('Height', validators=[DataRequired()])
     weight = FloatField('Weight', validators=[DataRequired()])
-    disabled = BooleanField('Disability', default=False, validators=[DataRequired()])
+    disabled = BooleanField('Disability')
     diagnosis = StringField('Disease Diagnosis', validators=[DataRequired()])
     underlying = StringField('Underlying Condition', validators=[DataRequired()])
     drug  = StringField('Drug Administered', validators=[DataRequired()])
     outcome  = StringField('Medical Outcome', validators=[DataRequired()])
-    need_referral = BooleanField('Referral Status', default=False, validators=[DataRequired()])
+    need_referral = BooleanField('Referral Status')
 
     submit = SubmitField('Register Records')
 
