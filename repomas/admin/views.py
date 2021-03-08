@@ -8,7 +8,7 @@ from repomas.models import Admin
 from . import admin
     
 
-@admin.route('/', methods=['POST', 'GET'])
+@admin.route('/admin/registration', methods=['POST', 'GET'])
 def registration():
 
     admin = Admin.query.filter_by(id=1).first()
