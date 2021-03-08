@@ -1,10 +1,12 @@
 import requests
 from flask import render_template
+from flask_login import login_required
 from requests.auth import HTTPBasicAuth
 
 from . import info
 
 @info.route('/info/facilities', methods=['GET'])
+@login_required
 def facilities():
 
     facilits = []
