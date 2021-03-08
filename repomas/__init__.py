@@ -47,5 +47,8 @@ def create_app(config):
     from .infoprod import info as info_blueprint
     app.register_blueprint(info_blueprint)
 
+    from .home import home as home_blueprint
+    app.register_blueprint(home_blueprint)
+
 
     return app
