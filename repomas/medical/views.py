@@ -1,5 +1,6 @@
-from flask import render_template
+from flask import render_template,flash, redirect, url_for
 
+from repomas import db
 from repomas.models import Student, MedicalStatus
 from .forms import MedicalStatusForm
 from . import med
@@ -9,6 +10,15 @@ def add_record(student_id):
     student = Student.query.get_or_404(student_id)
     form = MedicalStatusForm()
 
+    if form.validate_on_submit():
+        medrec = MedicalStatus(height=form.height.data, weight=form.weight.data, disabled=form.disabled.data,
+                                diagnosis=form.diagnosis.data, underlying=form.underlying.data, drug=form.drug.data,
+                                outcome=form.outcome.data, need_referral=form.need_referral.data, student_id=student.id)
+
+        db.session.add(medrec)
+        db.session.commit()
+        flash("Successfully Added {}'s medical records".format(student.first_name), "success")
+        return redirect(url_for('student.student_detail', student_id=student.id))
     return render_template('medical/student_record.html', title='Medical Status', 
                         form=form, student=student)
 
