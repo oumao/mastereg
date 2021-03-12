@@ -4,7 +4,7 @@ from flask_login import login_required
 from repomas.student.forms import StudentRegistrationForm, StudentUpdateForm
 from flask import render_template, redirect
 from repomas import db
-from repomas.models import Student
+from repomas.models import MedicalStatus, Student
 from . import student
 
 @student.route('/student/registration', methods=['POST', 'GET'])
@@ -33,9 +33,13 @@ def all_students():
 @login_required
 def student_detail(student_id):
     student = Student.query.get_or_404(student_id)
+    medrecs = db.session.query(MedicalStatus.height, MedicalStatus.weight, MedicalStatus.disabled,
+                                MedicalStatus.diagnosis, MedicalStatus.underlying, MedicalStatus.drug,
+                                MedicalStatus.outcome).join( Student, Student.id == MedicalStatus.student_id).all()
     currentyr = dt.utcnow()
     print(currentyr)
-    return render_template('student/student_details.html', title='Student', student=student, year=currentyr)
+    return render_template('student/student_details.html', 
+    title='Student', student=student, year=currentyr, medrecs=medrecs)
 
 @student.route('/students/<int:student_id>/update/', methods=['POST', 'GET'])
 @login_required
