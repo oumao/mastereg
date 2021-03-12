@@ -23,6 +23,24 @@
                 <p class="col-3">Ward: {{ student.county }}</p>
             </div>
         </div>
+         <div class="card-body">
+            <h3 class="card-title  text-center">Medical History</h3>
+            {% for medrec in medrecs %}
+             <div class="row">
+                 <p class="col-4">Height {{ medrec.height}}</p>
+                 <p class="col-4">Weight: {{ medrec.weight }}</p>
+                 <p class="col-4">Disability: {{ medrec.disabled }}</p>
+             </div>
+            <div class="row">
+                 <p class="col-8">Diagnosis: {{ medrec.diagnosis }}</p>
+                 <p class="col-4">Underlying Condition: {{ medrec.underlying }}</p>
+            </div>
+            <div class="row">
+                 <p class="col-3">Drug Prescribed: {{ medrec.drug }} </p>
+                 <p class="col-3">Outcome: {{ medrec.outcome }}</p>
+             </div>
+            {% endfor %}
+         </div>
     </div>
 </div>
 {% endblock %}
