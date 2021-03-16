@@ -1,3 +1,4 @@
+from datetime import datetime as dt
 from flask import render_template,flash, redirect, url_for
 
 from repomas import db
@@ -24,7 +25,11 @@ def add_record(student_id):
 
 @med.route('/medical/records', methods=['POST', 'GET'])
 def all_records():
-    return render_template('student/students.html', title='Medical Status')
+    allrec = db.session.query(Student.first_name, Student.last_name, Student.admission, Student.birthdate,
+                                MedicalStatus.height, MedicalStatus.weight, MedicalStatus.diagnosis, MedicalStatus.drug,
+                                MedicalStatus.underlying, MedicalStatus.need_referral).outerjoin(Student, Student.id==MedicalStatus.student_id).all()
+    year = dt.utcnow()
+    return render_template('medical/all_records.html', title='Medical Status', allrec=allrec, year=year)
 
 
 @med.route('/medical/<int:id>', methods=['POST', 'GET'])
