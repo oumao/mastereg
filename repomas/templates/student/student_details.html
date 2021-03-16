@@ -23,13 +23,20 @@
                 <p class="col-3">Ward: {{ student.county }}</p>
             </div>
         </div>
-         <div class="card-body">
+        <div class="card-body">
             <h3 class="card-title  text-center">Medical History</h3>
-            {% for medrec in medrecs %}
+            {% if not medrec %}
+                <p class="bg-primary text-white text-center fw-bold fs-3 p-3">There are no Medical history for the student!</p>
+            {% else%}
              <div class="row">
                  <p class="col-4">Height {{ medrec.height}}</p>
                  <p class="col-4">Weight: {{ medrec.weight }}</p>
-                 <p class="col-4">Disability: {{ medrec.disabled }}</p>
+                 <p class="col-3">BMI: {{ medrec.weight/(medrec.height**2)}}</p>
+                 {% if medrec.disabled == True %}
+                    <p class="col-4">Disability: Disabled</p>
+                 {% else %}
+                    <p class="col-4">Disability: No Disability</p>
+                 {% endif %}
              </div>
             <div class="row">
                  <p class="col-8">Diagnosis: {{ medrec.diagnosis }}</p>
@@ -38,9 +45,9 @@
             <div class="row">
                  <p class="col-3">Drug Prescribed: {{ medrec.drug }} </p>
                  <p class="col-3">Outcome: {{ medrec.outcome }}</p>
-             </div>
-            {% endfor %}
-         </div>
+            </div>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}
