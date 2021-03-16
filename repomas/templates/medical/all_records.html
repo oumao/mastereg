@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <a href="{{ url_for('admin.dashboard')}}" class="card bg-primary text-center text-white" 
+                    style="max-width: 13rem; height: 2rem; text-decoration: none;">Home</a>  
+                </div>
+                <div class="col-6">
+                    <a href="#" class="card bg-primary text-center text-white" 
+                    style="max-width: 13rem; height: 2rem; text-decoration: none; ">Some Button</a>
+                </div>
+            </div>  
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h3 class="title text-center">All Student's Medical Summary</h3>
+                        <hr>
+                        <form action="" class="table">
+                            
+                        </form>
+                    </div>
+                    <div class="content table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Name</th>
+                                <th>Admission Number</th>
+                                <th>Age</th>
+                                <th>Diagnosis</th>
+                                <th>underlying</th>
+                                <th>Drug</th>
+                                <th>Referral Status</th>
+                            </thead>
+                            <tbody>
+                                    {% for records in allrec %}
+                                        
+                                            <tr class="table-row">
+                                                <td>
+                                                    {{ records.first_name + " " + records.last_name}}   
+                                                </td>
+                                                <td>{{ records.admission }}</td>
+                                                <td>{{ (year-records.birthdate).days//365 }}</td>
+                                                <td>{{ records.diagnosis}}</td>
+                                                <td>{{ records.underlying}}</td>
+                                                <td>{{ records.drug}}</td>
+                                                {% if records.need_referral == True %}
+                                                    <td>Referred</td>
+                                                {% else %}
+                                                    <td>Not Referred</td>
+                                                {% endif %}
+                                            </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
