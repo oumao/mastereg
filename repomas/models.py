@@ -27,6 +27,7 @@ class Admin(db.Model, UserMixin):
 class Student(db.Model):
 
     __tablename__ = "students"
+    __searchable__ = ['admission']
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(50), nullable=False)
@@ -46,6 +47,9 @@ class Student(db.Model):
 
 
 class MedicalStatus(db.Model):
+
+    __tablename__ = 'medicalstatus'
+    __searchable__ = ['diagnosis', 'outcome', 'need_referral', 'disabled']
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     height = db.Column(db.Float, nullable=False)
