@@ -26,20 +26,20 @@ def add_student():
 @student.route('/student/all', methods=['POST', 'GET'])
 def all_students():
     students = Student.query.all()
-    return render_template('student/students_table.html', title='Students', students=students)
+    nums = Student.query.count()
+    return render_template('student/students_table.html', title='Students', students=students, nums=nums)
 
 
 @student.route('/student/<int:student_id>', methods=['POST', 'GET'])
 @login_required
 def student_detail(student_id):
     student = Student.query.get_or_404(student_id)
-    medrecs = db.session.query(MedicalStatus.height, MedicalStatus.weight, MedicalStatus.disabled,
+    medrec = db.session.query(MedicalStatus.height, MedicalStatus.weight, MedicalStatus.disabled,
                                 MedicalStatus.diagnosis, MedicalStatus.underlying, MedicalStatus.drug,
-                                MedicalStatus.outcome).join( Student, Student.id == MedicalStatus.student_id).all()
+                                MedicalStatus.outcome).join(Student, Student.id == MedicalStatus.student_id).filter_by(id=student_id).first()
     currentyr = dt.utcnow()
-    print(currentyr)
     return render_template('student/student_details.html', 
-    title='Student', student=student, year=currentyr, medrecs=medrecs)
+    title='Student', student=student, year=currentyr, medrec=medrec)
 
 @student.route('/students/<int:student_id>/update/', methods=['POST', 'GET'])
 @login_required
