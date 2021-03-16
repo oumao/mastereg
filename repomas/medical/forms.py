@@ -33,3 +33,10 @@ class MedicalStatusUpdateForm(FlaskForm):
 
     submit = SubmitField('Update Records')
 
+
+class MedicalFilterForm(FlaskForm):
+
+    searchinput = StringField('Filter', validators=[DataRequired()])
+
+    submit = SubmitField('Search')
+
