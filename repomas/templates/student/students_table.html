@@ -51,10 +51,11 @@
                                                     <a href="{{ url_for('student.delete_student', student_id=stud.id)}}" class="btn btn-danger">Delete</a>
                                                 </td>
                                             </tr>
+                                            
                                     {% endfor %}
                             </tbody>
                         </table>
-                        <p>Total students are {{ students.count(id)}}</p>
+                        <p>Total students are {{ nums }}</p>
                     </div>
                 </div>
             </div>
