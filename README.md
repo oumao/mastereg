@@ -6,21 +6,21 @@ The system is developed using python-flask. To install the project you need:
 
 1. clone the repository using 
 
-``` git clone https://www.github.com/oumao/mastereg.git ```
+    ``` git clone https://www.github.com/oumao/mastereg.git ```
 
 2. Ensure **python 3.5** and above is installed in your machine
 
 3. Create a virtual environment in the folder you have cloned the project using:
 
-``` virtualenv yourvirtualenv ``` 
+    ``` virtualenv yourvirtualenv ``` 
 
 4. Activate the virtualenv and install the dependecies using:
 
-``` pip install -r requirements.txt ```
+    ``` pip install -r requirements.txt ```
     
 5. Finally run the project:
 
-``` python run.py ```
+    ``` python run.py ```
 
         
 
