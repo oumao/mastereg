@@ -3,11 +3,12 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
+from dotenv import load_dotenv
 
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
+load_dotenv()
 
 def create_app(config):
 
