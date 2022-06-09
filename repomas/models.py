@@ -1,27 +1,31 @@
+from datetime import datetime
+from email.policy import default
 from repomas import db, login_manager
 from flask_login import UserMixin
 
 
 @login_manager.user_loader
-def load_user(admin_id):
-    return Admin.query.get(int(admin_id))
+def load_user(uuid):
+    return User.query.get(str(uuid))
 
 
-class Admin(db.Model, UserMixin):
+class User(db.Model, UserMixin):
 
-    __tablename__ = "administrator"
+    __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
-    username = db.Column(db.String(15), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
+    uuid = db.Column(db.String(80), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
+    is_active = db.Column(db.Boolean, default=False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    updated = db.Column(db.DateTime, nullable=False)
 
     def __repr__(self) -> str:
-        return "<Admin: {0} {1} {2} {3}>".format(self.first_name, self.last_name, 
-        self.email, self.username)
-
+        return f"<Admin: {self.first_name} {self.last_name} {self.email} {self.username}>"
 
 
 class Student(db.Model):
@@ -40,10 +44,7 @@ class Student(db.Model):
     medicalstat = db.relationship('MedicalStatus', backref='student', lazy='dynamic')
 
     def __repr__(self) -> str:
-        return "<Student: {0} {1} {2} {3}>".format(
-            self.first_name, self.last_name, self.admission, self.birthdate,
-            self.zipcode, self.county, self.ward
-        )
+        return f"<Student: {self.first_name}, {self.last_name}>"
 
 
 class MedicalStatus(db.Model):
@@ -63,11 +64,7 @@ class MedicalStatus(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
 
     def __repr__(self) -> str:
-        return "<Medical Status: {0} {1} {2} {3} {4} {5} {6} {7}>".format(
-            self.height, self.weight, self.disabled,
-            self.diagnosis, self.underlying, self.drug, 
-            self.outcome, self.need_referral
-        )
+        return f"<Medical Status: {self.height}, {self.weight}, {self.disabled}>"
 
 
    
