@@ -1,5 +1,4 @@
 from datetime import datetime
-from email.policy import default
 from repomas import db, login_manager
 from flask_login import UserMixin
 
@@ -18,14 +17,14 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
-    uuid = db.Column(db.String(80), nullable=False)
+    u_uid = db.Column(db.String(80), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
-    updated = db.Column(db.DateTime, nullable=False)
+    updated = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
 
     def __repr__(self) -> str:
-        return f"<Admin: {self.first_name} {self.last_name} {self.email} {self.username}>"
+        return f"<Admin: {self.first_name} {self.last_name} {self.email} {self.is_active}>"
 
 
 class Student(db.Model):
