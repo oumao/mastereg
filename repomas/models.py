@@ -17,14 +17,14 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
-    uuid = db.Column(db.String(80), nullable=False)
+    uuid = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     updated = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
 
     def __repr__(self) -> str:
-        return f"<Admin: {self.first_name} {self.last_name} {self.email} {self.is_active}>"
+        return f'<User: {self.first_name} {self.last_name} {self.email} {self.is_active}>'
 
 
 class Student(db.Model):
