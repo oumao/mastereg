@@ -3,9 +3,13 @@
 <div class="card">
 <div class="card-body">
     <form action="" method="POST" role="form">
-        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">First Time Registration For Administrator</legend>
+            {% if user_count >= 1 %}
+                 <legend class="border-bottom mb-4">User Registration</legend>
+            {% else %}
+                <legend class="border-bottom mb-4">First Time Registration For Administrator</legend>
+            {% endif %}
             <div class="form-group">
                 <div class="row">
                     <div class="col-6">
@@ -47,19 +51,6 @@
                     </div>
                 {% else %}
                     {{ form.email(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                {{ form.username.label(class="form-control-label") }}
-                {% if form.username.errors %}
-                    {{ form.username(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.username.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.username(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
             <div class="form-group">
