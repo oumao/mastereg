@@ -9,65 +9,58 @@ from repomas.models import User
 from . import user
 
 
-@user.route('/first/registration', methods=['POST', 'GET'])
-def first_time_registration():
-    user = User.query.filter_by(id=1).first()
-
-    if user:
-        return redirect(url_for('user.login'))
-    else:
-
-        form = UserRegistrationForm()
-
-        if form.validate_on_submit():
-            hashed_pass = generate_password_hash(form.password.data)
-            new_user = User(first_name=form.first_name.data, last_name=form.last_name.data,
-                            email=form.email.data, username=form.username.data, password=hashed_pass)
-
-            db.session.add(new_user)
-            db.session.commit()
-
-            flash("Administrator Successfully Added", "success")
-            return redirect(url_for('user.login'))
-
-        return render_template('user/registration.html', form=form)
-
-
 @user.route('/registration', methods=['POST', 'GET'])
 def registration():
-    user = User.query.filter_by(id=1).first()
-
-    if user:
-        return redirect(url_for('user.login'))
-    elif len(User.query.all()) >= 1:
-
-        form = UserRegistrationForm()
-
-        if form.validate_on_submit() and not User.query.filter_by(username=form.email.data):
+    user_count = User.query.count()
+    form = UserRegistrationForm()
+    if form.validate_on_submit():
+        if user_count == 0:
+            print("success")
             hashed_pass = generate_password_hash(form.password.data)
-            new_user = User(first_name=form.first_name.data, last_name=form.last_name.data,
-                            email=form.email.data, uuid=generate_uuid(), password=hashed_pass)
+            admin = User(first_name=form.first_name.data, last_name=form.last_name.data,
+                         email=form.email.data, password=hashed_pass,
+                         uuid=generate_uuid(), is_admin=True, is_active=True
+                         )
 
-            db.session.add(new_user)
+            db.session.add(admin)
             db.session.commit()
 
             flash("Administrator Successfully Added", "success")
             return redirect(url_for('user.login'))
+        else:
+            hashed_pass = generate_password_hash(form.password.data)
+            new_user = User(first_name=form.first_name.data, last_name=form.last_name.data,
+                            email=form.email.data, password=hashed_pass, uuid=generate_uuid())
+            print(new_user)
+            db.session.add(new_user)
+            db.session.commit()
 
-        return render_template('user/registration.html', form=form)
-    else:
-        return redirect('user.first_registration')
+            flash("User Successfully Added", "success")
+            return redirect(url_for('user.login'))
+
+    return render_template('user/registration.html', form=form, user_count=user_count)
 
 
-@user.route('/user/login', methods=['POST', 'GET'])
+@user.route('/login', methods=['POST', 'GET'])
 def login():
+    users = User.query.all()
+
+    if len(users) == 0:
+        return redirect(url_for('user.registration'))
     form = UserLoginForm()
     if form.validate_on_submit():
 
-        user = User.query.filter_by(username=form.username.data).first()
+        existing_user = User.query.filter_by(email=form.email.data).first()
 
-        if user and check_password_hash(user.password, form.password.data):
-            login_user(user)
+        if existing_user and existing_user.is_admin and \
+                check_password_hash(existing_user.password, form.password.data):
+
+            login_user(existing_user)
+            flash("Login Success", "success")
+            return redirect(url_for('admin.dashboard'))
+        elif existing_user and not existing_user.is_admin and \
+                check_password_hash(existing_user.password, form.password.data):
+            login_user(existing_user)
             flash("Login Success", "success")
             return redirect(url_for('user.dashboard'))
         else:
@@ -78,13 +71,13 @@ def login():
     return render_template('user/login.html', form=form)
 
 
-@user.route('/user/dashboard', methods=['GET', 'POST'])
+@user.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
     return render_template("user/dashboard.html", title="User Dashboard")
 
 
-@user.route('/user/logout', methods=['GET', 'POST'])
+@user.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     logout_user()
