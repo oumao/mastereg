@@ -19,7 +19,7 @@ def add_student():
         db.session.add(student)
         db.session.commit()
         flash("Successfully Added a student", "success")
-        return redirect(url_for('admin.dashboard'))
+        return redirect(url_for('user.dashboard'))
 
     return render_template('student/register.html', form=form, title='Student Registration')
 
