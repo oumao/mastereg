@@ -10,8 +10,8 @@ migrate = Migrate()
 login_manager = LoginManager()
 load_dotenv()
 
-def create_app(config):
 
+def create_app(config):
     if os.getenv('FLASK_CONFIG') == "production":
         app = Flask(__name__)
         app.config.update(
@@ -23,18 +23,18 @@ def create_app(config):
         app.config.from_object('config')
         app.config.from_pyfile('config.py')
 
-
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
     login_manager.login_message = "You must be logged in to access this page."
-    login_manager.login_view = "admin.login"
+    login_manager.login_view = "user.login"
     login_manager.login_message_category = "info"
 
-
-
     from repomas import models
+
+    from .user import user as user_blueprint
+    app.register_blueprint(user_blueprint)
 
     from .admin import admin as admin_blueprint
     app.register_blueprint(admin_blueprint)
@@ -50,6 +50,5 @@ def create_app(config):
 
     from .home import home as home_blueprint
     app.register_blueprint(home_blueprint)
-
 
     return app
