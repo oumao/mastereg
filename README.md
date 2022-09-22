@@ -1,6 +1,6 @@
 # Mastereg
 
-Mastereg is master list that keep track of students with RTIs(Respiratory Tract Infections). It is a web based system which that helps schools assist asmatic students with breathing and also help manage TB cases among students.
+Mastereg is master list that keep track of students with RTIs(Respiratory Tract Infections). It is a web based system which that helps schools assist asmatic students and also facilitate management of TB cases among students.
 
 The system is developed using python-flask. To install the project you need:
 
